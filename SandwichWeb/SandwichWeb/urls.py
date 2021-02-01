@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from client.views import Index, Index_Admin, makeOrder
+from client.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Index.as_view(),name = 'index'),
     path('administration/', Index_Admin.as_view(),name = 'administration'),
-    path('order/', makeOrder.as_view(),name = 'order'),
+    path('makeOrder/', makeOrder ,name = 'makeOrder'),
+    path('reset/', resetOrder ,name = 'resetOrder'),
+    path('confirm/', confirmOrder ,name = 'confirmOrder'),
 ]
