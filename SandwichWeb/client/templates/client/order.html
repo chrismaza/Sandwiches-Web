@@ -6,7 +6,8 @@
         <div class="col-md-12 col-sm-12 p-4">
             <form method="POST">
                 {% csrf_token %}
-                
+                <label>Nombre del Cliente:</label>
+                <input type="text" name="client_name" value="{{client_name}}">
                 <div class="pt-5">
                     <h2 style="font-weight: bold;">Tamaño:</h2>
                     {% for size in sizes %}
