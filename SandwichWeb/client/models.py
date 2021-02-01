@@ -21,6 +21,7 @@ class Order (models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     client_name = models.CharField(max_length=100)
     total = models.DecimalField(max_digits=5,decimal_places=2)
+    #email = models.EmailField(max_length=40,default='test@test.com')
 
     def __str__(self):
         return f'Orden: {self.created_on.strftime("%a, %d %b %y %H:%M:%S")}'
@@ -34,5 +35,5 @@ class Sandwich (models.Model):
 
 
     def __str__(self):
-        return self.total
+        return f'Sandwich: {self.id_sandwich}'
 

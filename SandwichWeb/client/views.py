@@ -61,4 +61,17 @@ class makeOrder (View):
         }
 
         return render(request,'client/order_confirmation.html',context)
-            
+
+class listOrder (View): # Lista General
+    def get(self, request, *args, **kwargs):
+        context = {
+            'orders': Order.objects.order_by('-created_on')   
+        }
+        return render(request,'client/order_list.html', context)
+
+class listOrderDate (View): # Lista con filtro por fecha
+    def get(self, request, *args, **kwargs):
+        context = {
+            'orders': Order.objects.order_by('created_on')  
+        }
+        return render(request,'client/order_list_date.html', context)
