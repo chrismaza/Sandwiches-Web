@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from client.views import Index, Index_Admin, makeOrder
 from client.views import *
 
 urlpatterns = [
