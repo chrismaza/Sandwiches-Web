@@ -7,6 +7,16 @@ from .models import Ingredients, Size, Order,Sandwich
 ##### Lista de Sandwiches de la Orden ###################
 
 lista_sand = []
+lista_view_sand = []
+
+############################################ Clases #####################################################
+class Index (View):
+    def get(self, request, *args, **kwargs):
+        return render(request,'client/index.html')
+
+class Index_Admin (View):
+    def get(self, request, *args, **kwargs):
+        return render(request,'client/admin.html')
 
 #### Clases##############################################
 class Index (View):
@@ -17,12 +27,28 @@ class Index_Admin (View):
     def get(self, request, *args, **kwargs):
         return render(request,'client/admin.html')
 
+class listOrder (View): # Lista General
+    def get(self, request, *args, **kwargs):
+        context = {
+            'orders': Order.objects.order_by('-created_on')
+        }
+        return render(request,'client/order_list.html', context)
+
+class listOrderDate (View): # Lista con filtro por fecha
+    def get(self, request, *args, **kwargs):
+        context = {
+            'orders': Order.objects.order_by('created_on')  
+        }
+        return render(request,'client/order_list_date.html', context)
+
 ########################## Funciones ###########################
 
 def makeOrder(request, *args, **kwargs):
 
     global data_size
     global data_ing
+    global data_id_sizes
+    global data_id_ing
 
     ingredients = Ingredients.objects.order_by('name')
     sizes = Size.objects.order_by('name')
@@ -98,10 +124,15 @@ def makeOrder(request, *args, **kwargs):
             'price': price,
         }
 
+        lista_view_sand.append(context)
+
         return render(request,'client/order_confirmation.html',context)
+
+    return render(request,'client/order.html',context)
 
 def resetOrder (request):
     lista_sand.clear()
+    lista_view_sand.clear()
     return render(request,'client/index.html')
 
 def confirmOrder (request):
@@ -111,30 +142,29 @@ def confirmOrder (request):
     for items in lista_sand:
         name = items['client_name']
         total_order += float(items['price'])
+    
+    context = {
+        'sandwich': lista_view_sand,
+        'total': total_order
+    }
 
-    p = Order.objects.create(client_name = name,total = total_order)
+    if request.method == "POST":
 
-    for items in lista_sand:
-        for m in items['sizes']:
-            size = Size.objects.get(id_size=m['id'])
-        sandwich = Sandwich.objects.create(order = p, size = size,total = items['price'])
-        for b in items['ingredients']:
-            ingredient = Ingredients.objects.get(id_ingredients=b['id'])
-            sandwich.ingredients.add(ingredient)
+        p = Order.objects.create(client_name = name,total = total_order)
 
-    return render(request,'client/index.html')
+        for items in lista_sand:
+            for m in items['sizes']:
+                size = Size.objects.get(id_size=m['id'])
+            sandwich = Sandwich.objects.create(order = p, size = size,total = items['price'])
+            for b in items['ingredients']:
+                ingredient = Ingredients.objects.get(id_ingredients=b['id'])
+                sandwich.ingredients.add(ingredient)
 
-class listOrder (View): # Lista General
-    def get(self, request, *args, **kwargs):
-        context = {
-            'orders': Order.objects.order_by('-created_on')   
-        }
-        return render(request,'client/order_list.html', context)
+        lista_sand.clear()
+        lista_view_sand.clear()
 
-class listOrderDate (View): # Lista con filtro por fecha
-    def get(self, request, *args, **kwargs):
-        context = {
-            'orders': Order.objects.order_by('created_on')  
-        }
-        return render(request,'client/order_list_date.html', context)
-    return render(request,'client/order.html',context)
+        return render(request,'client/index.html')
+
+    return render(request,'client/order_view.html',context)
+
+   
