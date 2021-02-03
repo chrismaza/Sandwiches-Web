@@ -1,0 +1,41 @@
+{% extends 'client/admin.html' %}
+{% block content %}
+<div class="table-responsive">
+    <form method="POST">
+      {% csrf_token %}
+      <select name="size" id="size">
+        {% for size in sizes %}
+            <option value="{{size.name}}">{{size.name}}</option>
+        {% endfor %}
+      </select>
+      <button class="btn btn-dark">Buscar</button>
+    </form>
+    <table class="table table-striped table-dark table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="font-weight: bold;text-align: center;">Fecha</th>
+          <th scope="col" style="font-weight: bold;text-align: center;">Tamaño</th>
+          <th scope="col" style="font-weight: bold;text-align: center;">Total del Sand.</th>
+          <th scope="col" style="font-weight: bold;text-align: center;">Cliente</th>
+          <th scope="col" style="font-weight: bold;text-align: center;">Orden</th>
+          <th scope="col" style="font-weight: bold;text-align: center;">Total de la Orden</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if list_ord_total %}
+          {% for x in list_ord_total %}
+            <tr>
+              <td style="text-align: center;">{{x.fecha}}</td>
+              <td style="text-align: center;">{{x.size}}</td>
+              <td style="text-align: center;">{{x.total_sand}}</td>
+              <td style="text-align: center;">{{x.client}}</td>
+              <td style="text-align: center;">{{x.id_order}}</td>
+              <td style="text-align: center;">{{x.total_order}}</td>
+            </tr>
+          {% endfor %}
+        {% endif%}
+      </tbody>
+    </table>
+</div>
+
+{% endblock content %}

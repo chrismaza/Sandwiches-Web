@@ -16,9 +16,9 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'administration' %}">General</a>
             <a class="dropdown-item" href="{% url 'getByDate' %}">Por Dia</a>
-            <a class="dropdown-item" href="#">Por Tamaño</a>
-            <a class="dropdown-item" href="#">Por Ingrediente</a>
-            <a class="dropdown-item" href="#">Por Cliente</a>
+            <a class="dropdown-item" href="{% url 'getBySize' %}">Por Tamaño</a>
+            <a class="dropdown-item" href="{% url 'getByIngredient' %}">Por Ingrediente</a>
+            <a class="dropdown-item" href="{% url 'getByClient' %}">Por Cliente</a>
           </div>
         </li>
       </ul>
