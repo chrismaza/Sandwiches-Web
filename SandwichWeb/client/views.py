@@ -220,3 +220,30 @@ def getByDate (request):
 
     return render(request,'client/order_list_date.html',context)
 
+def getBySize (request):
+    context = {}
+    if request.method == "POST":
+        tam = request.POST.get('size')
+        orders = Order.objects.order_by('created_on')
+        list_ord = []
+        for m in orders:
+            tamano = Size.objects.filter(name = tam)
+            sand = Sandwich.objects.filter(order=m,size = tamano)
+            for x in sand:
+                size = Size.objects.filter(id_size = x.size)
+                general = {
+                    'fecha': m.created_on,
+                    'price': m.total,
+                    'client': m.client_name,
+                    'size': size.name 
+                }
+                list_ord.append(general)
+                for x in list_ord:
+                    print(x)
+
+        context = {
+            'list_ord_total' : list_ord
+        }
+    
+
+    return render(request,'client/order_size.html',context)

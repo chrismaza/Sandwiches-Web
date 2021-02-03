@@ -22,6 +22,7 @@ urlpatterns = [
     path('', Index.as_view(),name = 'index'),
     path('administration/', getOrders,name = 'administration'),
     path('getByDate/', getByDate,name = 'getByDate'),
+    path('getBySize/', getBySize,name = 'getBySize'),
     path('makeOrder/', makeOrder ,name = 'makeOrder'),
     path('reset/', resetOrder ,name = 'resetOrder'),
     path('confirm/', confirmOrder ,name = 'confirmOrder'),
