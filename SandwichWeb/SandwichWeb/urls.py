@@ -20,8 +20,7 @@ from client.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Index.as_view(),name = 'index'),
-    path('administration/', Index_Admin.as_view(),name = 'administration'),
-    path('order/', makeOrder,name = 'order'),
-    path('administration/order_list/', listOrder.as_view(),name = 'order_list'),
-    path('administration/order_list_date/', listOrderDate.as_view(),name = 'order_list_date'),
+    path('administration/', getOrders,name = 'administration'),
+    path('getByDate/', getByDate,name = 'getByDate'),
+    path('makeOrder/', makeOrder ,name = 'makeOrder'),
     path('reset/', resetOrder ,name = 'resetOrder'),

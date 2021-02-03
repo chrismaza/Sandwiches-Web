@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from .models import Ingredients, Size, Order,Sandwich
 
+from datetime import datetime
+
 ##### Lista de Sandwiches de la Orden ###################
 
 lista_sand = []
@@ -14,34 +16,7 @@ class Index (View):
     def get(self, request, *args, **kwargs):
         return render(request,'client/index.html')
 
-class Index_Admin (View):
-    def get(self, request, *args, **kwargs):
-        return render(request,'client/admin.html')
-
-############################################ Clases #####################################################
-class Index (View):
-    def get(self, request, *args, **kwargs):
-        return render(request,'client/index.html')
-
-class Index_Admin (View):
-    def get(self, request, *args, **kwargs):
-        return render(request,'client/admin.html')
-
-class listOrder (View): # Lista General
-    def get(self, request, *args, **kwargs):
-        context = {
-            'orders': Order.objects.order_by('-created_on')
-        }
-        return render(request,'client/order_list.html', context)
-
-class listOrderDate (View): # Lista con filtro por fecha
-    def get(self, request, *args, **kwargs):
-        context = {
-            'orders': Order.objects.order_by('created_on')  
-        }
-        return render(request,'client/order_list_date.html', context)
-
-########################## Funciones ###########################
+############################################## Funciones ################################################
 
 def makeOrder(request, *args, **kwargs):
 
@@ -168,3 +143,78 @@ def confirmOrder (request):
         return render(request,'client/index.html')
 
     return render(request,'client/order_view.html',context)
+
+def getOrders (request):
+    orders = Order.objects.order_by('created_on')
+    lista_sandw = []
+    list_ord = []
+    for m in orders:
+        numero_sand = 0
+        sand = Sandwich.objects.filter(order=m)
+        for x in sand:
+            numero_sand += 1
+            # for n in x['ingredients']:
+            #     print(n)
+            # size = x['size']
+            # sand = {
+            #     'ing': ing,
+            #     'size': size
+            # }
+            # lista_sandw.append(sand)
+
+        general = {
+            'fecha': m.created_on,
+            'sand': numero_sand,
+            'price': m.total,
+            'client': m.client_name  
+        }
+        list_ord.append(general)
+        for x in list_ord:
+            print(x)
+
+    context = {
+        'list_ord_total' : list_ord
+    }
+
+    return render(request,'client/admin.html',context)
+
+def getByDate (request):
+
+    context = {}
+
+    if request.method == "POST":
+        date= request.POST.get("date")
+        date_format = datetime.strptime(date, '%Y-%m-%d')
+        orders = Order.objects.filter(created_on=date_format)
+        lista_sandw = []
+        list_ord = []
+        for m in orders:
+            numero_sand = 0
+            sand = Sandwich.objects.filter(order=m)
+            for x in sand:
+                numero_sand += 1
+                # for n in x['ingredients']:
+                #     print(n)
+                # size = x['size']
+                # sand = {
+                #     'ing': ing,
+                #     'size': size
+                # }
+                # lista_sandw.append(sand)
+
+            general = {
+                'fecha': m.created_on,
+                'sand': numero_sand,
+                'price': m.total,
+                'client': m.client_name  
+            }
+            list_ord.append(general)
+            for x in list_ord:
+                print(x)
+
+        context = {
+            'list_ord_total' : list_ord
+        }
+
+    return render(request,'client/order_list_date.html',context)
+
