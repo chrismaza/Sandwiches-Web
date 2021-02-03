@@ -18,7 +18,7 @@ class Ingredients (models.Model):
 
 class Order (models.Model):
     id_order = models.AutoField(primary_key=True)
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateField(auto_now_add=True)
     client_name = models.CharField(max_length=100)
     total = models.FloatField()
 
@@ -34,4 +34,3 @@ class Sandwich (models.Model):
 
     def __str__(self):
         return f'Sandwich {self.id_sandwich}'
-
