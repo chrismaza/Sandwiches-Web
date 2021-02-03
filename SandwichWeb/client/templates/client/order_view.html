@@ -1,0 +1,38 @@
+{% extends 'client/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-5 col-sm-12 p-4 text-center">
+            <h1>Resumen de Orden:</h1>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10 col-sm-12 text-center">
+            <h3 class="pb-3">Costo Total de la Orden: {{total}}</h3>
+            <div style="margin-top: 30px;display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;padding-left: 20px;padding-right: 20px;">
+                {% for x in sandwich %}
+                    <div>
+                        {% for m in x.sizes %}
+                            <p>{{ m.name }} <span class="pl-3">{{ m.price }}</span></p>
+                        {% endfor %}
+                        {% for n in x.ingredients %}
+                            <p>{{ n.name }} <span class="pl-3">{{ n.price }}</span></p>
+                        {% endfor %}
+
+                        <p class="font-weight-bold pt-4">Total: {{ x.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-dark mt-5">Pagar</button>
+                </form>
+                <button class="btn btn-dark mt-5"><a href="{% url 'resetOrder' %}">Cancelar Orden</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

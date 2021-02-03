@@ -15,10 +15,38 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from client.views import Index, Index_Admin
+from client.views import *
 
 urlpatterns = [
+
+    ##################### Admin de Django ##############################
     path('admin/', admin.site.urls),
+
+    ##################### Pagina Principal #############################
     path('', Index.as_view(),name = 'index'),
-    path('administration/', Index_Admin.as_view(),name = 'administration'),
+
+    ################## Pagina Administrativa ###########################
+    path('administration/', getOrders,name = 'administration'),
+
+    ################## Obtener una Orden por Fecha #####################
+    path('getByDate/', getByDate,name = 'getByDate'),
+
+    ################### Obtener una Orden por Tamaño ###################
+    path('getBySize/', getBySize,name = 'getBySize'),
+
+    ################### Obtener una Orden por Ingrediente ##############
+    path('getByIngredient/', getByIngredient,name = 'getByIngredient'),
+
+    #################### Obtener una Orden por Cliente #################
+    path('getByClient/', getByClient,name = 'getByClient'),
+
+    ###################### Realizar una Orden ##########################
+    path('makeOrder/', makeOrder ,name = 'makeOrder'),
+
+    ###################### Reiniciar una Orden #########################
+    path('reset/', resetOrder ,name = 'resetOrder'),
+
+    ###################### Confirmar una Orden #########################
+    path('confirm/', confirmOrder ,name = 'confirmOrder'),
+    
 ]

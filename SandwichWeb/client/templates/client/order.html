@@ -1,0 +1,54 @@
+{% extends 'client/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-12 col-sm-12 p-4">
+            <form method="POST">
+                {% csrf_token %}
+                <label>Nombre del Cliente:</label>
+                <input type="text" name="client_name" value="{{client}}">
+                <div style="display: grid;grid-template-columns: 1fr 1fr; margin-top: 30px;">
+                    <div>
+                        <h2 style="font-weight: bold;">Tamaño:</h2>
+                        {% for size in sizes %}
+                        <div class="row mt-4">
+                            <div class="col-md-8 col-sm-12">
+                                <div class="d-flex flex-row">
+                                    <div class="form-group form-check">
+                                        <input type="radio" name="items_sizes[]" class="form-check-input" value="{{ size.pk }}">
+                                        <label class="form-check-label">{{ size.name }}</label>
+                                    </div>
+                                    <p class="font-weight-bold pl-5">Precio: {{ size.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <div>
+                            <h2 style="font-weight: bold;">Ingredientes:</h2>
+                            {% for app in ingredients %}
+                            <div class="row mt-4">
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="d-flex flex-row">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" name="items_ing[]" class="form-check-input" value="{{ app.pk }}">
+                                            <label class="form-check-label">{{ app.name }}</label>
+                                        </div>
+                                        <p class="font-weight-bold pl-5">Precio: {{ app.price }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-dark mt-5" style="margin-left: 40%;">Ordenar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
