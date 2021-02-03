@@ -105,6 +105,8 @@ def makeOrder(request, *args, **kwargs):
 
     return render(request,'client/order.html',context)
 
+##############################################################################################################
+
 def resetOrder (request):
     lista_sand.clear()
     lista_view_sand.clear()

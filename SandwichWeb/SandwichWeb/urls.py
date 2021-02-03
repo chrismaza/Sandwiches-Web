@@ -24,3 +24,5 @@ urlpatterns = [
     path('getByDate/', getByDate,name = 'getByDate'),
     path('makeOrder/', makeOrder ,name = 'makeOrder'),
     path('reset/', resetOrder ,name = 'resetOrder'),
+    path('confirm/', confirmOrder ,name = 'confirmOrder'),
+]
