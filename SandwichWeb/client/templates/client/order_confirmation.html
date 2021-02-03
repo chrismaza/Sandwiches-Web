@@ -4,9 +4,7 @@
 <div class="container mb-5">
     <div class="row justify-content-center mt-1">
         <div class="col-md-5 col-sm-12 p-4 text-center">
-            <h1>Order Submitted!</h1>
-            <p>You should receive a confirmation email soon.</p>
-            <a href="{% url 'index' %}">Go to the homepage</a>
+            <h1>Subtotal del Sandwich</h1>
         </div>
     </div>
 
@@ -24,7 +22,11 @@
             <div>
                 <form method="POST">
                     {% csrf_token %}
-                    <button class="btn btn-dark mt-5"><a href="{% url 'makeOrder' %}">Ordenar Otro</a></button>
+                    <button class="btn btn-dark mt-5">
+                        <a href="{% url 'makeOrder' %}">
+                            Ordenar Otro
+                        </a>
+                    </button>
                 </form>
                 <button class="btn btn-dark mt-5"><a href="{% url 'confirmOrder' %}">Confirmar Orden</a></button>
                 <button class="btn btn-dark mt-5"><a href="{% url 'resetOrder' %}">Reiniciar Orden</a></button>

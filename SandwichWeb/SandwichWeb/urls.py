@@ -24,7 +24,4 @@ urlpatterns = [
     path('order/', makeOrder,name = 'order'),
     path('administration/order_list/', listOrder.as_view(),name = 'order_list'),
     path('administration/order_list_date/', listOrderDate.as_view(),name = 'order_list_date'),
-    path('makeOrder/', makeOrder ,name = 'makeOrder'),
     path('reset/', resetOrder ,name = 'resetOrder'),
-    path('confirm/', confirmOrder ,name = 'confirmOrder'),
-]

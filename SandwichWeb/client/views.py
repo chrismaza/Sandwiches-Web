@@ -18,7 +18,7 @@ class Index_Admin (View):
     def get(self, request, *args, **kwargs):
         return render(request,'client/admin.html')
 
-#### Clases##############################################
+############################################ Clases #####################################################
 class Index (View):
     def get(self, request, *args, **kwargs):
         return render(request,'client/index.html')
@@ -135,8 +135,10 @@ def resetOrder (request):
     lista_view_sand.clear()
     return render(request,'client/index.html')
 
+#############################################################################################################
+
 def confirmOrder (request):
-    
+
     total_order = 0
 
     for items in lista_sand:
@@ -166,5 +168,3 @@ def confirmOrder (request):
         return render(request,'client/index.html')
 
     return render(request,'client/order_view.html',context)
-
-   
